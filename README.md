@@ -16,19 +16,19 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
 - modify the file `HADOOP_FILES/etc/hadoop/hadoop-env.sh` adding `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
 - Change the `.bashrc` file adding these rows:
    ```
-    #set hadoop home
-    export HADOOP_HOME=$HOME/hadoop-3.3.1
-    export HADOOP_CONF_DIR=$HOME/hadoop-3.3.1/etc/hadoop
-    export HADOOP_MAPRED_HOME=$HOME/hadoop-3.3.1
-    export HADOOP_COMMON_HOME=$HOME/hadoop-3.3.1
-    export HADOOP_HDFS_HOME=$HOME/hadoop-3.3.1
-    export YARN_HOME=$HOME/hadoop-3.3.1
-    export PATH=$PATH:$HOME/hadoop-3.3.1/bin
+   #set hadoop home
+   export HADOOP_HOME=$HOME/hadoop-3.3.1
+   export HADOOP_CONF_DIR=$HOME/hadoop-3.3.1/etc/hadoop
+   export HADOOP_MAPRED_HOME=$HOME/hadoop-3.3.1
+   export HADOOP_COMMON_HOME=$HOME/hadoop-3.3.1
+   export HADOOP_HDFS_HOME=$HOME/hadoop-3.3.1
+   export YARN_HOME=$HOME/hadoop-3.3.1
+   export PATH=$PATH:$HOME/hadoop-3.3.1/bin
 
-    # set java home
-    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-    export PATH=/usr/lib/jvm/java-8-openjdk-amd64:$PATH
-    export PDSH_RCMD_TYPE=ssh
+   # set java home
+   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+   export PATH=/usr/lib/jvm/java-8-openjdk-amd64:$PATH
+   export PDSH_RCMD_TYPE=ssh
     
 - Run `source .bashrc` for reload the file
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
@@ -63,6 +63,8 @@ Change `/etc/hosts` file adding private IPs of all cluster machines like follow 
 172.31.4.195 master
 172.31.11.53 slave1
 172.31.5.5 slave2
+```
+
 
 Restart host service: `service sshd restart`
 
@@ -78,6 +80,7 @@ Restart host service: `service sshd restart`
 
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   export PATH=/usr/lib/jvm/java-8-openjdk-amd64:$PATH
+  ```
 
 - Run `source .bashrc` for reload the file
 
