@@ -21,8 +21,8 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
 - Run `source .bashrc` for reload the file
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
 
-Open ports to see web UI:
-- 
+Open ports 9870 and 8088 to the IPs that you want to see web UIs of hadoop
+
 ### Run the single machine cluster
 - http://machineIP:9870/dfshealth.html for see the cluster status
 
@@ -58,9 +58,9 @@ Restart host service: `service sshd restart`
 
 From now assume that the upacked tar forlder name is HADOOP_FILES
 
-Open ports to see web UI:
-
-Open port between hosts for communicate
+Open ports:
+- 9870 and 8088 to the IPs that you want to see web UIs of hadoop
+- 0 - 65535 between hosts for communicate each other
 
 ### Start the cluster
 - the first time run `hadoop namenode -format`
