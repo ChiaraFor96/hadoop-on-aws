@@ -32,6 +32,7 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
     
 - Run `source .bashrc` for reload the file
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
+   -  TODO
 
 Open ports 9870 and 8088 to the IPs that you want to see web UIs of hadoop
 
@@ -89,6 +90,9 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
 Open ports:
 - 9870 and 8088 to the IPs that you want to see web UIs of hadoop
 - 0 - 65535 between hosts for communicate each other
+
+- modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
+   -  TODO
 
 ### Start the cluster
 - the first time run `hadoop namenode -format`
