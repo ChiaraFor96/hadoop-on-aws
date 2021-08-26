@@ -46,6 +46,11 @@ Disable firewall:
 - `sudo service firewalld stop`
 - `sudo ufw disable`
 
+Change `/etc/hosts` file adding private IPs of all cluster machines like follow (in AWS the private ip not changes and the machines are in the same subnet)
+TODO
+
+Restart host service: `service sshd restart`
+
 - Change the `.bashrc` file adding these rows:
   - TODO 
   - `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
