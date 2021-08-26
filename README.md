@@ -27,6 +27,12 @@ Open ports to see web UI:
 - http://machineIP:9870/dfshealth.html for see the cluster status
 
 ## Cluster set up
+For this part I follow this two tutorials and some stackoverflow questions:
+- https://www.edureka.co/blog/setting-up-a-multi-node-cluster-in-hadoop-2.X
+- http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html
+
+Start.
+
 Download and upack the tar file in each machine, and install some programs:
 - Download hadoop: `wget https://apache.osuosl.org/hadoop/common/stable/hadoop-3.3.1.tar.gz`
 - unpack the tar: `tar -xvf hadoop-3.3.1.tar.gz`
@@ -51,14 +57,14 @@ Open ports to see web UI:
 
 Open port between hosts for communicate
 
-## Start the cluster
+### Start the cluster
 - the first time run `hadoop namenode -format`
 - `HADOOP_FILES/sbin/start-all.sh`
 
-## Stop the cluster
+### Stop the cluster
 - `HADOOP_FILES/sbin/stop-all.sh`
 
-## Before restart (ONLY if there are problems)
+### Before restart (ONLY if there are problems)
 - `rm -r /tmp/` (consider to delete only the hadoop folders inside /tmp)
 - `rm -r datanode/current` in each datanode and in the name node
 - `rm -r namenode/current` in the name node
