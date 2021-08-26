@@ -15,9 +15,21 @@ Start.
 From now assume that the upacked tar forlder name is HADOOP_FILES
 - modify the file `HADOOP_FILES/etc/hadoop/hadoop-env.sh` adding `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
 - Change the `.bashrc` file adding these rows:
-  - TODO 
-  - `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
-  - `export PDSH_RCMD_TYPE=ssh`
+   ```
+    #set hadoop home
+    export HADOOP_HOME=$HOME/hadoop-3.3.1
+    export HADOOP_CONF_DIR=$HOME/hadoop-3.3.1/etc/hadoop
+    export HADOOP_MAPRED_HOME=$HOME/hadoop-3.3.1
+    export HADOOP_COMMON_HOME=$HOME/hadoop-3.3.1
+    export HADOOP_HDFS_HOME=$HOME/hadoop-3.3.1
+    export YARN_HOME=$HOME/hadoop-3.3.1
+    export PATH=$PATH:$HOME/hadoop-3.3.1/bin
+
+    # set java home
+    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    export PATH=/usr/lib/jvm/java-8-openjdk-amd64:$PATH
+    export PDSH_RCMD_TYPE=ssh
+    
 - Run `source .bashrc` for reload the file
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
 
@@ -47,13 +59,26 @@ Disable firewall:
 - `sudo ufw disable`
 
 Change `/etc/hosts` file adding private IPs of all cluster machines like follow (in AWS the private ip not changes and the machines are in the same subnet)
-TODO
+```
+172.31.4.195 master
+172.31.11.53 slave1
+172.31.5.5 slave2
 
 Restart host service: `service sshd restart`
 
 - Change the `.bashrc` file adding these rows:
-  - TODO 
-  - `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
+  ```
+  export HADOOP_HOME=$HOME/server/hadoop-3.3.1
+  export HADOOP_CONF_DIR=$HOME/server/hadoop-3.3.1/etc/hadoop
+  export HADOOP_MAPRED_HOME=$HOME/server/hadoop-3.3.1
+  export HADOOP_COMMON_HOME=$HOME/server/hadoop-3.3.1
+  export HADOOP_HDFS_HOME=$HOME/server/hadoop-3.3.1
+  export HADOOP_YARN_HOME=$HOME/server/hadoop-3.3.1
+  export PATH=$PATH:$HOME/server/hadoop-3.3.1/bin
+
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+  export PATH=/usr/lib/jvm/java-8-openjdk-amd64:$PATH
+
 - Run `source .bashrc` for reload the file
 
 From now assume that the upacked tar forlder name is HADOOP_FILES
