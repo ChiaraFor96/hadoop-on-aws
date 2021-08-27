@@ -340,7 +340,7 @@ The result of the running:
      style="float: left; margin-right: 10px;" />
 
 
-The source code of `WordCount.java``
+The source code of `WordCount.java`
 
 ```java
 package exercise1;
