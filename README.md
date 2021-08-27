@@ -1,5 +1,5 @@
 # hadoop-on-aws
-In this repository I show you how to setup a plain Hadoop cluster, in particular using EC2 machines (that lives in the same subnet).
+In this repository I show you how to setup a plain Hadoop cluster, in particular using EC2 machines (that lives in the same subnet with ubuntu).
 But you con consider it for a plain cluster of on premis machines.
 
 ## Single machine cluster set up
@@ -69,7 +69,7 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
       </configuration>
       ```
       
-   -  for the file `mapred-site.xml` (cit ontains configuration settings of ResourceManager and NodeManager like application memory management size, the operation needed on program & algorithm, etc.)
+   -  for the file `mapred-site.xml` (it ontains configuration settings of ResourceManager and NodeManager like application memory management size, the operation needed on program & algorithm, etc.)
       ```
       <configuration>
       <property>
@@ -146,7 +146,7 @@ Change `/etc/hosts` file adding private IPs of all cluster machines like follow 
 ```
 and other slaves that you have.
 
-From now assume that the upacked tar forlder name is HADOOP_FILES
+From now assume that the upacked tar folder name is HADOOP_FILES
 
 Restart host service: `service sshd restart`
 
@@ -181,7 +181,7 @@ Open ports:
       </configuration>
       ```
 
-   -  for the file `hdfs-site.xml` (which is the file with configuration settings of HDFS daemons (i.e. NameNode, DataNode, Secondary NameNode). It also includes the replication factor and block size of HDFS.)
+   -  for the file `hdfs-site.xml` (which is the file with configuration settings of HDFS daemons (i.e. NameNode, DataNode, Secondary NameNode). It also includes the replication factor and block size of HDFS.) 
       
       for _master_
       ```
@@ -223,6 +223,9 @@ Open ports:
       </configuration>
       ```
       
+      Remember to mkdir of the datanode folder on slaves (if not preset on them)
+       and chmod 700
+
    -  for the file `yarn-site.xml` (it contains configuration settings of MapReduce application like number of JVM that can run in parallel, the size of the mapper and the reducer process,  CPU cores available for a process, etc.) for both _master_ and _slaves_
       ```
       <configuration>
