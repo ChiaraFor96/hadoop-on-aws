@@ -272,4 +272,7 @@ Open ports:
 - `rm -r datanode/current` in each datanode and in the name node
 - `rm -r namenode/current` in the name node
 
-
+### Some screens 
+Cluster Datanodes: <img src="cluster/datanode.png"
+     alt="Cluster Datanodes"
+     style="float: left; margin-right: 10px;" />
