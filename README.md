@@ -338,3 +338,6 @@ The result of the running:
 <img src="cluster/jobresult.png"
      alt="Result of the job"
      style="float: left; margin-right: 10px;" />
+
+
+The source code: ![WordCount](WordCount.java)
