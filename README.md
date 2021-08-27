@@ -13,17 +13,16 @@ Start.
 - Install _java_ `sudo apt-get -y install openjdk-8-jdk-headless`
 
 From now assume that the upacked tar forlder name is HADOOP_FILES
-- modify the file `HADOOP_FILES/etc/hadoop/hadoop-env.sh` adding `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
 - Change the `.bashrc` file adding these rows:
    ```
    #set hadoop home
-   export HADOOP_HOME=$HOME/hadoop-3.3.1
-   export HADOOP_CONF_DIR=$HOME/hadoop-3.3.1/etc/hadoop
-   export HADOOP_MAPRED_HOME=$HOME/hadoop-3.3.1
-   export HADOOP_COMMON_HOME=$HOME/hadoop-3.3.1
-   export HADOOP_HDFS_HOME=$HOME/hadoop-3.3.1
-   export YARN_HOME=$HOME/hadoop-3.3.1
-   export PATH=$PATH:$HOME/hadoop-3.3.1/bin
+   export HADOOP_HOME=$HOME/HADOOP_FILES
+   export HADOOP_CONF_DIR=$HOME/HADOOP_FILES/etc/hadoop
+   export HADOOP_MAPRED_HOME=$HOME/HADOOP_FILES
+   export HADOOP_COMMON_HOME=$HOME/HADOOP_FILES
+   export HADOOP_HDFS_HOME=$HOME/HADOOP_FILES
+   export YARN_HOME=$HOME/HADOOP_FILES
+   export PATH=$PATH:$HOME/HADOOP_FILES/bin
 
    # set java home
    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -32,7 +31,7 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
     
 - Run `source .bashrc` for reload the file
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
-   -  for the file `core-site.xml`
+   -  for the file `core-site.xml` (it contains configuration settings of Hadoop core such as I/O settings that are common to HDFS & MapReduce)
       ```
       <configuration>
       <property>
@@ -42,7 +41,7 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
       </configuration>
       ```
 
-   -  for the file `hdfs-site.xml`
+   -  for the file `hdfs-site.xml` (which is the file with configuration settings of HDFS daemons (i.e. NameNode, DataNode, Secondary NameNode). It also includes the replication factor and block size of HDFS.)
       ```
       <configuration>
       <property>
@@ -56,7 +55,7 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
       </configuration>
       ```
       
-   -  for the file `yarn-site.xml`
+   -  for the file `yarn-site.xml` (it contains configuration settings of MapReduce application like number of JVM that can run in parallel, the size of the mapper and the reducer process,  CPU cores available for a process, etc.)
       ```
       <configuration>
       <property>
@@ -70,7 +69,7 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
       </configuration>
       ```
       
-   -  for the file `mapred-site.xml` 
+   -  for the file `mapred-site.xml` (cit ontains configuration settings of ResourceManager and NodeManager like application memory management size, the operation needed on program & algorithm, etc.)
       ```
       <configuration>
       <property>
@@ -91,6 +90,7 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
       </property>
       </configuration>
       ```
+    - for `hadoop-env.sh` add `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
     
 Open ports 9870 and 8088 to the IPs that you want to see web UIs of hadoop
 
@@ -123,19 +123,21 @@ Change `/etc/hosts` file adding private IPs of all cluster machines like follow 
 172.31.11.53 slave1
 172.31.5.5 slave2
 ```
+and other slaves that you have.
 
+From now assume that the upacked tar forlder name is HADOOP_FILES
 
 Restart host service: `service sshd restart`
 
 - Change the `.bashrc` file adding these rows:
   ```
   export HADOOP_HOME=$HOME/server/hadoop-3.3.1
-  export HADOOP_CONF_DIR=$HOME/server/hadoop-3.3.1/etc/hadoop
-  export HADOOP_MAPRED_HOME=$HOME/server/hadoop-3.3.1
-  export HADOOP_COMMON_HOME=$HOME/server/hadoop-3.3.1
-  export HADOOP_HDFS_HOME=$HOME/server/hadoop-3.3.1
-  export HADOOP_YARN_HOME=$HOME/server/hadoop-3.3.1
-  export PATH=$PATH:$HOME/server/hadoop-3.3.1/bin
+  export HADOOP_CONF_DIR=$HOME/HADOOP_FILES/etc/hadoop
+  export HADOOP_MAPRED_HOME=$HOME/HADOOP_FILES
+  export HADOOP_COMMON_HOME=$HOME/HADOOP_FILES
+  export HADOOP_HDFS_HOME=$HOME/HADOOP_FILES
+  export HADOOP_YARN_HOME=$HOME/HADOOP_FILES
+  export PATH=$PATH:$HOME/HADOOP_FILES/bin
 
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   export PATH=/usr/lib/jvm/java-8-openjdk-amd64:$PATH
@@ -143,15 +145,121 @@ Restart host service: `service sshd restart`
 
 - Run `source .bashrc` for reload the file
 
-From now assume that the upacked tar forlder name is HADOOP_FILES
-
 Open ports:
 - 9870 and 8088 to the IPs that you want to see web UIs of hadoop
 - 0 - 65535 between hosts for communicate each other
 
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
-   -  TODO
+      -  for the file `core-site.xml` (it contains configuration settings of Hadoop core such as I/O settings that are common to HDFS & MapReduce) for both _master_ and _slaves_
+      ```
+      <configuration>
+      <property>
+      <name>fs.default.name</name>
+      <value>hdfs://master:9000</value>
+      </property>
+      </configuration>
+      ```
 
+   -  for the file `hdfs-site.xml` (which is the file with configuration settings of HDFS daemons (i.e. NameNode, DataNode, Secondary NameNode). It also includes the replication factor and block size of HDFS.)
+      
+      for _master_
+      ```
+      <configuration>
+      <property>
+      <name>dfs.replication</name>
+      <value>2</value>
+      </property>
+      <property>
+      <name>dfs.permissions</name>
+      <value>false</value>
+      </property>
+      <property>
+      <name>dfs.namenode.name.dir</name>
+      <value>/home/ubuntu/server/hadoop-3.3.1/namenode</value>
+      </property>
+      <property>
+      <name>dfs.datanode.data.dir</name>
+      <value>/home/ubuntu/server/hadoop-3.3.1/datanode</value>
+      </property>
+      </configuration>
+      ```
+      
+      for _slaves_
+      ```
+      <configuration>
+      <property>
+      <name>dfs.replication</name>
+      <value>2</value>
+      </property>
+      <property>
+      <name>dfs.permissions</name>
+      <value>false</value>
+      </property>
+      <property>
+      <name>dfs.datanode.data.dir</name>
+      <value>/home/ubuntu/server/HADOOP_FILES/datanode</value>
+      </property>
+      </configuration>
+      ```
+      
+   -  for the file `yarn-site.xml` (it contains configuration settings of MapReduce application like number of JVM that can run in parallel, the size of the mapper and the reducer process,  CPU cores available for a process, etc.) for both _master_ and _slaves_
+      ```
+      <configuration>
+      <property>
+      <name>yarn.nodemanager.aux-services</name>
+      <value>mapreduce_shuffle</value>
+      </property>
+      <property>
+      <name>yarn.nodemanager.auxservices.mapreduce.shuffle.class</name>
+      <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+      </property>
+      </configuration>
+      ```
+      
+   -  for the file `mapred-site.xml` (cit ontains configuration settings of ResourceManager and NodeManager like application memory management size, the operation needed on program & algorithm, etc.) for both _master_ and _slaves_
+      ```
+      <configuration>
+      <property>
+      <name>mapreduce.framework.name</name>
+      <value>yarn</value>
+      </property>
+      <property>
+      <name>yarn.app.mapreduce.am.env</name>
+      <value>HADOOP_MAPRED_HOME=/home/ubuntu/HADOOP_FILES</value>
+      </property>
+      <property>
+      <name>mapreduce.map.env</name>
+      <value>HADOOP_MAPRED_HOME=/home/ubuntu/HADOOP_FILES</value>
+      </property>
+      <property>
+      <name>mapreduce.reduce.env</name>
+      <value>HADOOP_MAPRED_HOME=/home/ubuntu/HADOOP_FILES</value>
+      </property>
+      </configuration>
+      ```
+   - for `hadoop-env.sh` for both _master_ and _slaves_ add `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
+      
+   - create the `masters` file (contains address of master nodes) for both _master_ and _slaves_ as 
+      ```
+      master
+      ```
+      
+  - create the `workers` file (contains address of worker nodes, in hadoop 2 this file is named `slaves`) as 
+           for _master_
+      ```
+      master
+      slave1
+      slave2
+      ```
+      
+      for _slaves_
+      ```
+      slave1
+      slave2
+      ```
+
+      also remember to add the other slaves that are in `/etc/hosts`
+      
 ### Start the cluster
 - the first time run `hadoop namenode -format`
 - `HADOOP_FILES/sbin/start-all.sh`
