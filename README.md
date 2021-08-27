@@ -32,8 +32,66 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
     
 - Run `source .bashrc` for reload the file
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
-   -  TODO
+   -  for the file `core-site.xml`
+      ```
+      <configuration>
+      <property>
+      <name>fs.default.name</name>
+      <value>hdfs://localhost:9000</value>
+      </property>
+      </configuration>
+      ```
 
+   -  for the file `hdfs-site.xml`
+      ```
+      <configuration>
+      <property>
+      <name>dfs.replication</name>
+      <value>1</value>
+      </property>
+      <property>
+      <name>dfs.permission</name>
+      <value>false</value>
+      </property>
+      </configuration>
+      ```
+      
+   -  for the file `yarn-site.xml`
+      ```
+      <configuration>
+      <property>
+      <name>yarn.nodemanager.aux-services</name>
+      <value>mapreduce_shuffle</value>
+      </property>
+      <property>
+      <name>yarn.nodemanager.auxservices.mapreduce.shuffle.class</name>
+      <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+      </property>
+      </configuration>
+      ```
+      
+   -  for the file `mapred-site.xml` 
+      ```
+      <configuration>
+      <property>
+      <name>mapreduce.framework.name</name>
+      <value>yarn</value>
+      </property>
+      <property>
+      <name>yarn.app.mapreduce.am.env</name>
+      <value>HADOOP_MAPRED_HOME=/home/ubuntu/HADOOP_FILES</value>
+      </property>
+      <property>
+      <name>mapreduce.map.env</name>
+      <value>HADOOP_MAPRED_HOME=/home/ubuntu/HADOOP_FILES</value>
+      </property>
+      <property>
+      <name>mapreduce.reduce.env</name>
+      <value>HADOOP_MAPRED_HOME=/home/ubuntu/HADOOP_FILES</value>
+      </property>
+      </configuration>
+      ```
+    
 Open ports 9870 and 8088 to the IPs that you want to see web UIs of hadoop
 
 ### Run the single machine cluster
