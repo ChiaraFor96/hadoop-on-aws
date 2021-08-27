@@ -95,9 +95,30 @@ From now assume that the upacked tar forlder name is HADOOP_FILES
 Open ports 9870 and 8088 to the IPs that you want to see web UIs of hadoop
 
 ### Run the single machine cluster
-- http://machineIP:9870/dfshealth.html for see the cluster status
+From the HADOOPFILE FOLDER
+- `./hadoop-daemon.sh start namenode` for start name node
+- `/hadoop-daemon.sh start datanode` for start the data node
+- `./yarn-daemon.sh start resourcemanager` for start the resource manager
+- `./yarn-daemon.sh start nodemanager` for start the node manager
+- `./mr-jobhistory-daemon.sh start historyserver` for start the history server
 
-## Cluster set up
+### Some screens 
+Overview: <img src="single-node/overview.png"
+     alt="Cluster Overview"
+     style="float: left; margin-right: 10px;" />
+Cluster Datanode: <img src="single-node/datanode.png"
+     alt="Cluster Datanode"
+     style="float: left; margin-right: 10px;" />
+
+HDFS interface (http://machineIP:9870/dfshealth.html): <img src="single-node/hdfs.png"
+     alt="HDFS interface 1"
+     style="float: left; margin-right: 10px;" />
+     <img src="single-node/hdfs2.png"
+     alt="HDFS interface 2"
+     style="float: left; margin-right: 10px;" />
+
+
+## Cluster with more than a node set up
 For this part I follow this two tutorials and some stackoverflow questions:
 - https://www.edureka.co/blog/setting-up-a-multi-node-cluster-in-hadoop-2.X
 - http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html
@@ -146,7 +167,7 @@ Restart host service: `service sshd restart`
 - Run `source .bashrc` for reload the file
 
 Open ports:
-- 9870 and 8088 to the IPs that you want to see web UIs of hadoop
+- 9870 and 8088 of the master to the IPs that you want to see web UIs of hadoop
 - 0 - 65535 between hosts for communicate each other
 
 - modify the configurations file that are in `HADOOP_FILES/etc/hadoop/`
@@ -268,6 +289,7 @@ Open ports:
 - `HADOOP_FILES/sbin/stop-all.sh`
 
 ### Before restart (ONLY if there are problems)
+- remember to use `jps` command in the nodes for see the active services
 - `rm -r /tmp/` (consider to delete only the hadoop folders inside /tmp)
 - `rm -r datanode/current` in each datanode and in the name node
 - `rm -r namenode/current` in the name node
@@ -275,4 +297,44 @@ Open ports:
 ### Some screens 
 Cluster Datanodes: <img src="cluster/datanode.png"
      alt="Cluster Datanodes"
+     style="float: left; margin-right: 10px;" />
+
+Hadoop interface (http://master:8088): <img src="cluster/hadoop.png"
+     alt="Hadoop interface 2"
+     style="float: left; margin-right: 10px;" />
+     <img src="cluster/hadoop2.png"
+     alt="Hadoop interface 2"
+     style="float: left; margin-right: 10px;" />
+
+HDFS interface (http://master:9870/dfshealth.html): <img src="cluster/hdfs1.png"
+     alt="HDFS interface 1"
+     style="float: left; margin-right: 10px;" />
+     <img src="cluster/hdfs2.png"
+     alt="HDFS interface 2"
+     style="float: left; margin-right: 10px;" />
+ 
+# Example of a job execution and HDFS interaction
+An example of a job is in `WordCount.java`, it counts for each word in a hdfs folder the number of occurrences.
+
+We interact with hdfs with the command `hdfs dfs`, for example:
+```
+# Explore HDFS directories with –ls
+hdfs dfs -ls /
+# Create a bigdata folder in your HDFS home
+hdfs dfs -mkdir bigdata
+# Create a dummy file in your folder in the local file system
+echo 'This is a dummy file' > dummy.txt
+# Put the dummy file to your bigdata folder in HDFS
+hdfs dfs -put bigdata/dummy.txt
+# Get the job file from the virtual cluster's HDFS
+hdfs dfs –get /path/WordCount.java
+# Print hdfs file 
+hdfs dfs -cat mapreduce/output/* | head -n 30
+```
+
+After obtain the jar with gradle we run it with: `hadoop jar jarName.jar WordCount inputHDFSFoder outputHDFSFolder`
+
+The result of the running:
+<img src="cluster/jobresult.png"
+     alt="Result of the job"
      style="float: left; margin-right: 10px;" />
