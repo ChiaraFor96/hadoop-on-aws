@@ -428,14 +428,14 @@ public class WordCount {
 ```
 
 ## AWS configuration
-AWS EC2 instance for single node cluster: <img src="singleNode/aws.png"
+AWS EC2 instance for single node cluster: <img src="single-node/aws.png"
      alt="single node cluster on AWS"
      style="float: left; margin-right: 10px;" />
 
-AWS EC2 instances for 3 node cluster: <img src="cluser/aws.png"
+AWS EC2 instances for 3 node cluster: <img src="cluster/aws.png"
      alt="cluster nodes cluster on AWS"
      style="float: left; margin-right: 10px;" />
 
-AWS EC2 instances security group: <img src="singleNode/sg.png"
+AWS EC2 instances security group: <img src="single-node/sg.png"
      alt="security group of aws instances"
      style="float: left; margin-right: 10px;" />
